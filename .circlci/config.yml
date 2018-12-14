@@ -1,0 +1,8 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circlci/node:4.8.2
+    steps:
+      - checkout
+      - run: echo "My first CicleCI"
