@@ -22,16 +22,20 @@ jobs:
     docker:
       - image: circleci/golang:1.12
     steps:
-      - run: echo "DEPLOY"
+      - run: echo Key value from circle context=${MY_KEY_NAME}
+      - run:
+          name: Build lambda functions
+          command: make build
+      - run:
+          name: Deploy lambda functions
+          command: make deploy
 
 workflows:
   version: 2
   test_build:
     jobs:
       - test
-      - build:
-          requires:
-            - test
+      - build
       - deploy:
           filters:
             branches:
