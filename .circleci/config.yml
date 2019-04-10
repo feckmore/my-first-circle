@@ -1,8 +1,38 @@
 version: 2
 jobs:
-  build:
+  test:
     docker:
-      - image: circleci/golang:1.11
+      - image: circleci/golang:1.12
+    working_directory: /go/src/github.com/feckmore/my-first-circle
     steps:
       - checkout
-      - run: echo "My first CicleCI"
+      - run: go get -v -t -d ./...
+      - run: go test -v ./...
+  build:
+    docker:
+      - image: circleci/golang:1.12
+    steps:
+      - checkout
+      - run: echo "BUILD"
+  deploy:
+    docker:
+      - image: circleci/golang:1.12
+    steps:
+      - run: echo "DEPLOY"
+
+workflows:
+  version: 2
+  test_build:
+    jobs:
+      - test
+      - build:
+          requires:
+            - test
+      - deploy:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - test
+            - build
