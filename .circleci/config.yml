@@ -22,7 +22,7 @@ jobs:
           paths:
             - bin/*
   deploy:
-    working_directory: /go/src/github.com/feckmore/my-first-circle
+    # working_directory: /go/src/github.com/feckmore/my-first-circle
     docker:
       - image: circleci/node:10.15.0
     steps:
