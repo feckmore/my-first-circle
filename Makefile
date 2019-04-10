@@ -3,6 +3,7 @@
 build:
 	dep ensure -v
 	env GOOS=linux go build -ldflags="-s -w" -o bin/hello hello/main.go
+	ls -la bin
 
 clean:
 	rm -rf ./bin ./vendor Gopkg.lock

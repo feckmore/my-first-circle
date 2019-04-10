@@ -1,33 +1,41 @@
 version: 2
 jobs:
   test:
+    working_directory: /go/src/github.com/feckmore/my-first-circle
     docker:
       - image: circleci/golang:1.12
-    working_directory: /go/src/github.com/feckmore/my-first-circle
     steps:
       - checkout
       - run: go get -v -t -d ./...
       - run: go test -v ./...
   build:
+    working_directory: /go/src/github.com/feckmore/my-first-circle
     docker:
       - image: circleci/golang:1.12
     steps:
       - checkout
-      - run: echo "BUILD"
+      - run:
+          name: Build lambda functions
+          command: make build
   deploy:
+    working_directory: /go/src/github.com/feckmore/my-first-circle
     docker:
       - image: circleci/golang:1.12
     steps:
-      - run: echo "DEPLOY"
+      - run: echo Key value from circle context=${MY_KEY_NAME}
+      - run:
+          name: Build lambda functions
+          command: make build
+      - run:
+          name: Deploy lambda functions
+          command: make deploy
 
 workflows:
   version: 2
   test_build:
     jobs:
       - test
-      - build:
-          requires:
-            - test
+      - build
       - deploy:
           filters:
             branches:
