@@ -27,7 +27,6 @@ jobs:
       - image: circleci/node:10.15.0
     steps:
       - run: echo Key value from circle context=${MY_KEY_NAME}
-    steps:
       - checkout
       - attach_workspace:
           at: .
