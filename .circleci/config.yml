@@ -13,7 +13,9 @@ jobs:
       - image: circleci/golang:1.12
     steps:
       - checkout
-      - run: echo "BUILD"
+      - run:
+          name: Build lambda functions
+          command: make build
   deploy:
     docker:
       - image: circleci/golang:1.12
