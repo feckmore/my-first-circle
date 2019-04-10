@@ -34,7 +34,7 @@ jobs:
           name: Install Serverless CLI and dependencies
           command: |
             sudo npm i -g serverless
-            npm install
+            sudo npm install
       - run: AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY sls deploy
 
 workflows:
