@@ -17,12 +17,26 @@ jobs:
       - run:
           name: Build lambda functions
           command: make build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - bin/*
   deploy:
     working_directory: /go/src/github.com/feckmore/my-first-circle
     docker:
-      - image: circleci/golang:1.12
+      - image: circleci/node:10.15.0
     steps:
       - run: echo Key value from circle context=${MY_KEY_NAME}
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install Serverless CLI and dependencies
+          command: |
+            sudo npm i -g serverless
+            npm install
+      - run: AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY sls deploy
       - run:
           name: Build lambda functions
           command: make build
