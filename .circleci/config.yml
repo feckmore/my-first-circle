@@ -37,10 +37,11 @@ workflows:
       - test
       - build
       - deploy:
+          context: org-global
+          requires:
+            - test
+            - build
           filters:
             branches:
               only:
                 - master
-          requires:
-            - test
-            - build
