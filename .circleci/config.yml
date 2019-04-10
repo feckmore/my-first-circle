@@ -13,7 +13,12 @@ jobs:
       - image: circleci/golang:1.12
     steps:
       - checkout
-      - run: echo "My first CicleCI"
+      - run: echo "BUILD"
+  deploy:
+    docker:
+      - image: circleci/golang:1.12
+    steps:
+      - run: echo "DEPLOY"
 
 workflows:
   version: 2
@@ -23,3 +28,11 @@ workflows:
       - build:
           requires:
             - test
+      - deploy:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - test
+            - build
