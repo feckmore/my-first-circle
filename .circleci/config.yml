@@ -42,6 +42,11 @@ workflows:
   test_build:
     jobs:
       - test
+          name: Test One
+          context: test-one
+      - test
+          name: Test Two
+          context: test-two
       - build
       - deploy:
           context: org-global
