@@ -1,6 +1,7 @@
 version: 2
 jobs:
   test:
+    name: $NAME
     working_directory: /go/src/github.com/feckmore/my-first-circle
     docker:
       - image: circleci/golang:1.12
@@ -42,10 +43,8 @@ workflows:
   test_build:
     jobs:
       - test
-          name: Test One
           context: test-one
       - test
-          name: Test Two
           context: test-two
       - build
       - deploy:
